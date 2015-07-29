@@ -22,6 +22,17 @@ namespace intelex_interview.Models
             return allfolders;
         }
 
+        public bool addfolder(structure newFolder)
+        {
+            using (objstructure)
+            {
+                objstructure.structures.InsertOnSubmit(newFolder);
+                objstructure.SubmitChanges();
+                return true;
+            }
+
+        }
+
 
     }
 }

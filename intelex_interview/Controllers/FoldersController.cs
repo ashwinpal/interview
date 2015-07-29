@@ -32,23 +32,48 @@ namespace intelex_interview.Controllers
         // GET: Folders/Create
         public ActionResult Create()
         {
+            var allfolders = fobj.getAllFolders();
+
+            if (allfolders == null)
+            {
+                ViewBag.count = 0;
+                return View();
+            }
+            List<SelectListItem> items = new List<SelectListItem>();
+
+            foreach (var record in allfolders)
+            {
+                items.Add(new SelectListItem { Text = record.Name, Value = record.Id.ToString() });                
+            }
+
+            ViewBag.folders = items;
+
             return View();
         }
 
         // POST: Folders/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(structure newFolder, FormCollection collection)
         {
-            try
-            {
-                // TODO: Add insert logic here
+            newFolder.Parent_Id = Convert.ToInt32(collection["folders"]);
 
-                return RedirectToAction("Index");
-            }
-            catch
+            if (ModelState.IsValid)
             {
-                return View();
+                try
+                {
+                    // insert logic here
+
+                    fobj.addfolder(newFolder);
+
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return View();
+                }
             }
+
+            return View();
         }
 
         // GET: Folders/Edit/5

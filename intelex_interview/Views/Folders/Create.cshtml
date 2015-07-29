@@ -1,7 +1,7 @@
 ﻿@model intelex_interview.Models.structure
 
 @{
-    Layout = null;
+    
 }
 
 <!DOCTYPE html>
@@ -12,14 +12,32 @@
     <title>Create</title>
 </head>
 <body>
-    <div> @using (Html.BeginForm())
-          { 
+    <div> 
+        <br /> <br />
+
+        @using(Html.BeginForm())
+        {
+            if (ViewBag.count == 0)
+            { <p>There are no folders</p>}
+            else
+            {
+            <p>Folder List</p>
+            
+            @Html.DropDownList("folders");
+                <br /><br />
+                <p>Please select the base folder where you want to create the new folder.  </p><br />
+                
+            }
+            
             @Html.DisplayFor(x => x.Name)
-            @Html.TextBoxFor(x => x.Name)<br /><br />
+            
+            @Html.TextBoxFor(x => x.Name)
+            
+            <br /><br />
             
             <input type="submit" value="Add" />
-          }
+            
+        }
     </div>
 </body>
 </html>
-  
