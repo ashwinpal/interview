@@ -4,14 +4,23 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using intelex_interview.Models;
+
 namespace intelex_interview.Controllers
 {
     public class FoldersController : Controller
     {
+        folders fobj = new folders();
+
         // GET: Folders
         public ActionResult Index()
         {
-            return View();
+            var allfolders = fobj.getAllFolders();
+
+            if (allfolders == null)
+                ViewBag.count = 0;
+
+            return View(allfolders);
         }
 
         // GET: Folders/Details/5

@@ -1,0 +1,35 @@
+﻿@model IEnumerable<intelex_interview.Models.structure>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div> 
+            <p>List of folders</p>
+            
+            @if (ViewBag.count == 0)
+            { <p>There are no folders</p>}
+            else
+            { <p>There are folders</p>
+            
+                foreach (var record in Model)
+                { 
+                    <p>@record.Id</p><br />
+                    <p>@record.Name</p><br />
+                    <p>@record.Parent_Id</p>
+                }
+
+            }
+            
+            
+    </div>
+</body>
+</html>

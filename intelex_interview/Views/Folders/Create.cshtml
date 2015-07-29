@@ -1,0 +1,25 @@
+﻿@model intelex_interview.Models.structure
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+    <div> @using (Html.BeginForm())
+          { 
+            @Html.DisplayFor(x => x.Name)
+            @Html.TextBoxFor(x => x.Name)<br /><br />
+            
+            <input type="submit" value="Add" />
+          }
+    </div>
+</body>
+</html>
+  
