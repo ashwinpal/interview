@@ -166,6 +166,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\folderListModel.cs" />
     <Compile Include="Models\folders.cs" />
     <Compile Include="Models\foldersLINQClasses.designer.cs">
       <AutoGen>True</AutoGen>

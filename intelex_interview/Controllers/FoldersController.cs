@@ -18,9 +18,40 @@ namespace intelex_interview.Controllers
             var allfolders = fobj.getAllFolders();
 
             if (allfolders == null)
+            {
                 ViewBag.count = 0;
+                return View();
+            }
 
-            return View(allfolders);
+            List<folderListModel> arrangedFolders = new List<folderListModel>();
+
+            foreach( var record in allfolders)
+            {
+                folderListModel fl = new folderListModel();
+
+                fl.Id = record.Id;
+                fl.Name = record.Name;
+                fl.Parent_Id = record.Parent_Id;
+                
+                arrangedFolders.Add(fl);
+            }
+
+            foreach (folderListModel fol in arrangedFolders)
+            {
+                fol.subfolders = new List<folderListModel>();
+
+                foreach(folderListModel subfol in arrangedFolders)
+                {
+                    if (fol.Id == subfol.Parent_Id)
+                        fol.subfolders.Add(subfol);
+                }
+
+            }
+
+            arrangedFolders = arrangedFolders.OrderBy(x => x.Parent_Id).ToList();
+           
+
+            return View(arrangedFolders);
         }
 
         // GET: Folders/Details/5
@@ -39,6 +70,7 @@ namespace intelex_interview.Controllers
                 ViewBag.count = 0;
                 return View();
             }
+
             List<SelectListItem> items = new List<SelectListItem>();
 
             foreach (var record in allfolders)
@@ -55,69 +87,25 @@ namespace intelex_interview.Controllers
         [HttpPost]
         public ActionResult Create(structure newFolder, FormCollection collection)
         {
-            newFolder.Parent_Id = Convert.ToInt32(collection["folders"]);
+            
 
             if (ModelState.IsValid)
             {
                 try
                 {
                     // insert logic here
-
+                    newFolder.Parent_Id = Convert.ToInt32(collection["folders"]);
                     fobj.addfolder(newFolder);
 
                     return RedirectToAction("Index");
                 }
                 catch
                 {
-                    return View();
+                    return RedirectToAction("Create");
                 }
             }
 
-            return View();
-        }
-
-        // GET: Folders/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Folders/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Folders/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Folders/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Create");
         }
     }
 }

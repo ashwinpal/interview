@@ -15,17 +15,21 @@
     <div> 
         <br /> <br />
 
+        @Html.ValidationSummary()
+
         @using(Html.BeginForm())
         {
             if (ViewBag.count == 0)
-            { <p>There are no folders</p>}
+            { <strong>There are no folders</strong><br />
+                <strong>Enter root Folder Name</strong><br /><br />}
             else
             {
-            <p>Folder List</p>
-            
-            @Html.DropDownList("folders");
+            <strong>Folder List</strong>
+              
+                 @Html.DropDownList("folders");
+                
                 <br /><br />
-                <p>Please select the base folder where you want to create the new folder.  </p><br />
+                <p>Please select the base folder where you want to create the new Sub-Folder.  </p><br />
                 
             }
             

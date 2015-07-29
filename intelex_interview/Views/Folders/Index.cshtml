@@ -1,6 +1,6 @@
-﻿@model IEnumerable<intelex_interview.Models.structure>
+﻿@model IEnumerable<intelex_interview.Models.folderListModel>
 
-@{
+@functions{
     
 }
 
@@ -10,28 +10,60 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+
+    <style>
+        .f{
+            display:block;
+            background-color:yellowgreen;
+            width: 100px;
+
+        }
+
+        .disp{
+            display:none;
+        }
+    </style>
 </head>
 <body>
-    <div> 
+ 
         <br /><br />
 
-            <p>List of folders</p>
+            <h2>List of folders</h2>
             
             @if (ViewBag.count == 0)
-            { <p>There are no folders</p>}
+            { <strong>There are no folders</strong>}
             else
-            { <p>There are folders</p>
-            
-                foreach (var record in Model)
-                { 
-                    <p>@record.Id</p><br />
-                    <p>@record.Name</p><br />
-                    <p>@record.Parent_Id</p>
+            {
+               @helper Showfolder(IEnumerable<intelex_interview.Models.folderListModel> f)
+                {
+                    <ul>    
+                        @foreach ( var record in f)
+                        {                          
+                            <li>
+                                @record.Name
+                                                              
+                                 @if(record.subfolders!=null)
+                                {
+                                    @Showfolder(record.subfolders)
+                                }
+                            </li>
+                            }                       
+                    </ul>
+                  
+                    
                 }
+                
+                @Model.First().Name;
+                
+                @Showfolder(Model.First().subfolders)
 
             }
             
-            
-    </div>
+        
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script>
+        $("div.f").click(function(){$(this).toggleClass("disp")});
+    </script>
+
 </body>
 </html>
