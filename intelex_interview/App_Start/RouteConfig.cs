@@ -16,7 +16,7 @@ namespace intelex_interview
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Folders", action = "Index", id = UrlParameter.Optional }
             );
         }
     }
